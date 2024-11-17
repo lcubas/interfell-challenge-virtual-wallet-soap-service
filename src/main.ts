@@ -51,9 +51,13 @@ async function bootstrap() {
             return Responder.error(error.message, 500);
           }
         },
+        makePaymentWithWallet: async (args: any) => {
+          console.log('makePaymentWithWallet', args);
+        },
+        confirmPaymentWithWallet: async (args: any) => {
+          console.log('confirmPaymentWithWallet', args);
+        },
         // getTransactons: async () => {},
-        // generatePayment: async () => {},
-        // confirmPayment: async () => {},
       },
     },
   };

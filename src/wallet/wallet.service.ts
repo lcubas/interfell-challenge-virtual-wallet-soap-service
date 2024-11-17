@@ -13,6 +13,12 @@ export interface GetBalanceDTO {
   phoneNumber: string;
 }
 
+export interface MakePaymentDTO {
+  purchaseAmount: number;
+  documentNumber: string;
+  phoneNumber: string;
+}
+
 @Injectable()
 export class WalletService {
   constructor(
@@ -20,23 +26,23 @@ export class WalletService {
     private readonly transactionRepository: TransactionRepository,
   ) {}
 
-  async rechargeWallet(recharge: RechargeWalletDTO): Promise<void> {
-    if (recharge.amount <= 0) {
+  async rechargeWallet(data: RechargeWalletDTO): Promise<void> {
+    if (data.amount <= 0) {
       throw new Error('Amount must be greater than 0');
     }
 
     await this.walletRepository.findOneAndUpdate(
       {
         'customer.documentNumber': {
-          $eq: recharge.documentNumber,
+          $eq: data.documentNumber,
         },
         'customer.phoneNumber': {
-          $eq: recharge.phoneNumber,
+          $eq: data.phoneNumber,
         },
       },
       {
         $inc: {
-          balance: recharge.amount,
+          balance: data.amount,
         },
       },
     );
@@ -55,9 +61,20 @@ export class WalletService {
     return wallet.balance;
   }
 
-  async getTransactons() {}
+  async makePayment(data: MakePaymentDTO) {
+    const wallet = await this.walletRepository.findOne({
+      'customer.documentNumber': {
+        $eq: data.documentNumber,
+      },
+      'customer.phoneNumber': {
+        $eq: data.phoneNumber,
+      },
+    });
 
-  async generatePayment() {}
+    if (wallet.balance < data.purchaseAmount) {
+      throw new Error('Insufficient funds');
+    }
+  }
 
   async confirmPayment() {}
 }

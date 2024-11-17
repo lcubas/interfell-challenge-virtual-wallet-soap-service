@@ -19,6 +19,17 @@
     <part name="phoneNumber" type="xsd:string"/>
   </message>
 
+  <message name="MakePaymentWithWalletRequest">
+    <part name="documentNumber" type="xsd:string"/>
+    <part name="phoneNumber" type="xsd:string"/>
+    <part name="purchaseAmount" type="xsd:double"/>
+  </message>
+
+  <message name="ConfirmPaymentWithWalletRequest">
+    <part name="sessionId" type="xsd:string"/>
+    <part name="token" type="xsd:string"/>
+  </message>
+
   <message name="WalletResponse">
     <part name="success" type="xsd:boolean"/>
     <part name="cod_error" type="xsd:string"/>
@@ -35,6 +46,16 @@
 
     <operation name="getWalletBalance">
       <input message="tns:GetWalletBalanceRequest"/>
+      <output message="tns:WalletResponse"/>
+    </operation>
+
+    <operation name="makePaymentWithWallet">
+      <input message="tns:MakePaymentWithWalletRequest"/>
+      <output message="tns:WalletResponse"/>
+    </operation>
+
+    <operation name="confirmPaymentWithWallet">
+      <input message="tns:ConfirmPaymentWithWalletRequest"/>
       <output message="tns:WalletResponse"/>
     </operation>
   </portType>
@@ -55,6 +76,26 @@
 
     <operation name="getWalletBalance">
       <soap:operation soapAction="http://www.example.com/VirtualWallet#GetWalletBalance"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+
+    <operation name="makePaymentWithWallet">
+      <soap:operation soapAction="http://www.example.com/VirtualWallet#MakePaymentWithWallet"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+
+    <operation name="confirmPaymentWithWallet">
+      <soap:operation soapAction="http://www.example.com/VirtualWallet#ConfirmPaymentWithWallet"/>
       <input>
         <soap:body use="literal"/>
       </input>
