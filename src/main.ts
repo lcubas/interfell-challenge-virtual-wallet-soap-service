@@ -6,12 +6,15 @@ import { join } from 'path';
 import { AppModule } from './app.module';
 import { CustomerService } from './customer/customer.service';
 import { Responder } from './services/responder';
+import { WalletService } from './wallet/wallet.service';
 
 async function bootstrap() {
   const app = await NestFactory.createApplicationContext(AppModule);
 
   const customerService = app.get(CustomerService);
-  const soapDefinitions = {
+  const walletService = app.get(WalletService);
+
+  const customerSoapDefinition = {
     CustomerService: {
       CustomerServicePort: {
         registerCustomer: async (args: any) => {
@@ -24,28 +27,46 @@ async function bootstrap() {
         },
       },
     },
+  };
+
+  const walletSoapDefinition = {
     WalletService: {
       WalletServicePort: {
-        getBalance: async () => {},
-        updateBalance: async () => {},
-        getTransactons: async () => {},
-        generatePayment: async () => {},
-        confirmPayment: async () => {},
+        rechargeWallet: async (args: any) => {
+          try {
+            await walletService.rechargeWallet(args);
+            return Responder.success({
+              message: 'Wallet recharged successfully',
+            });
+          } catch (error) {
+            console.log('walletSoapDefinition', error);
+            return Responder.error(error.message, 500);
+          }
+        },
+        // getBalance: async () => {},
+        // updateBalance: async () => {},
+        // getTransactons: async () => {},
+        // generatePayment: async () => {},
+        // confirmPayment: async () => {},
       },
     },
   };
 
-  const wsdlPath = join(__dirname, 'service.wsdl');
-  const wsdl = readFileSync(wsdlPath, 'utf8');
+  const customerWSDLPath = join(__dirname, 'customer/service.wsdl');
+  const customerWSDL = readFileSync(customerWSDLPath, 'utf8');
+  const walletWSDLPath = join(__dirname, 'wallet/service.wsdl');
+  const walletWSDL = readFileSync(walletWSDLPath, 'utf8');
 
   const server = createServer(function (request, response) {
     response.end('404: Not Found: ' + request.url);
   });
 
   server.listen(3000);
-  const soapServer = soap.listen(server, '/customers', soapDefinitions, wsdl);
-  soapServer.log = function (type: any, data: any, req: any) {
-    console.log(type, data, req.headers);
+  soap.listen(server, '/customers', customerSoapDefinition, customerWSDL);
+  const ss = soap.listen(server, '/wallets', walletSoapDefinition, walletWSDL);
+
+  ss.log = function (type: any, data: any) {
+    console.log(type, data);
   };
 }
 

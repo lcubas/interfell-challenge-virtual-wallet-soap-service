@@ -20,5 +20,6 @@ import { WalletService } from './wallet.service';
     ]),
   ],
   providers: [WalletService, WalletRepository, TransactionRepository],
+  exports: [WalletRepository],
 })
 export class WalletModule {}

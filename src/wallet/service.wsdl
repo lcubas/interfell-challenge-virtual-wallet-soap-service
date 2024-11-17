@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions 
+  xmlns="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:tns="http://www.example.com/VirtualWallet"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://www.example.com/VirtualWallet"
+  name="VirtualWallet">
+
+  <!-- Definición de mensajes -->
+  <message name="RechargeWalletRequest">
+    <part name="documentNumber" type="xsd:string"/>
+    <part name="phoneNumber" type="xsd:string"/>
+    <part name="amount" type="xsd:double"/>
+  </message>
+
+  <message name="RechargeWalletResponse">
+    <part name="success" type="xsd:boolean"/>
+    <part name="cod_error" type="xsd:string"/>
+    <part name="message_error" type="xsd:string"/>
+    <part name="data" type="xsd:string"/>
+  </message>
+
+  <!-- Definición de operaciones -->
+  <portType name="WalletServicePortType">
+    <operation name="rechargeWallet">
+      <input message="tns:RechargeWalletRequest"/>
+      <output message="tns:RechargeWalletResponse"/>
+    </operation>
+  </portType>
+
+  <!-- Definición de enlace (binding) -->
+  <binding name="WalletServiceBinding" type="tns:WalletServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="rechargeWallet">
+      <soap:operation soapAction="http://www.example.com/VirtualWallet#rechargeWallet"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+
+  <!-- Definición del servicio -->
+  <service name="WalletService">
+    <port name="WalletServicePort" binding="tns:WalletServiceBinding">
+      <soap:address location="http://localhost:3000/wallets"/>
+    </port>
+  </service>
+</definitions>

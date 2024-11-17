@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CustomerRepository } from './customer.repository';
+import { CustomerRepository } from './repositories/customer.repository';
 
 export interface CreateCustomerDTO {
   name: string;
@@ -13,6 +13,6 @@ export class CustomerService {
   constructor(private readonly customerRepository: CustomerRepository) {}
 
   async create(customer: CreateCustomerDTO) {
-    return await this.customerRepository.create(customer);
+    return await this.customerRepository.createWithWallet(customer);
   }
 }

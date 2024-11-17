@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule, SchemaFactory } from '@nestjs/mongoose';
 import { CustomerService } from './customer.service';
-import { CustomerRepository } from './customer.repository';
-import { CustomerSchema } from './customer.schema';
+import { CustomerSchema } from './schemas/customer.schema';
+import { CustomerRepository } from './repositories/customer.repository';
+import { WalletModule } from 'src/wallet/wallet.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { CustomerSchema } from './customer.schema';
         schema: SchemaFactory.createForClass(CustomerSchema),
       },
     ]),
+    WalletModule,
   ],
   providers: [CustomerService, CustomerRepository],
 })

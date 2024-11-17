@@ -1,7 +1,11 @@
 import { Prop, Schema } from '@nestjs/mongoose';
 import { MongooseBaseSchema } from 'src/database/mongoose/mongoose-base-schema';
 
-@Schema({ versionKey: false, collection: 'customers' })
+@Schema({
+  versionKey: false,
+  collection: 'customers',
+  timestamps: true,
+})
 export class CustomerSchema extends MongooseBaseSchema {
   @Prop({ required: true })
   name: string;

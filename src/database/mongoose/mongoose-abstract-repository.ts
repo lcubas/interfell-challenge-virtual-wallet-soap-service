@@ -1,4 +1,4 @@
-import { Logger, NotFoundException } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import {
   FilterQuery,
   Model,
@@ -22,7 +22,7 @@ export abstract class MongooseAbstractRepository<
     private readonly connection: Connection,
   ) {}
   async create(
-    document: Omit<TSchema, '_id'>,
+    document: Partial<Omit<TSchema, '_id'>>,
     options?: SaveOptions,
   ): Promise<TSchema> {
     const createdDocument = new this.model({
@@ -39,7 +39,7 @@ export abstract class MongooseAbstractRepository<
 
     if (!document) {
       this.logger.warn('Document not found with filterQuery', filterQuery);
-      throw new NotFoundException('Document not found.');
+      throw new Error('Document not found.');
     }
 
     return document as TSchema;
@@ -56,7 +56,7 @@ export abstract class MongooseAbstractRepository<
 
     if (!document) {
       this.logger.warn(`Document not found with filterQuery:`, filterQuery);
-      throw new NotFoundException('Document not found.');
+      throw new Error('Document not found.');
     }
 
     return document;
