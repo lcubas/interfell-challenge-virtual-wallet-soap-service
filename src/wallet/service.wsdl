@@ -14,7 +14,12 @@
     <part name="amount" type="xsd:double"/>
   </message>
 
-  <message name="RechargeWalletResponse">
+  <message name="GetWalletBalanceRequest">
+    <part name="documentNumber" type="xsd:string"/>
+    <part name="phoneNumber" type="xsd:string"/>
+  </message>
+
+  <message name="WalletResponse">
     <part name="success" type="xsd:boolean"/>
     <part name="cod_error" type="xsd:string"/>
     <part name="message_error" type="xsd:string"/>
@@ -25,15 +30,31 @@
   <portType name="WalletServicePortType">
     <operation name="rechargeWallet">
       <input message="tns:RechargeWalletRequest"/>
-      <output message="tns:RechargeWalletResponse"/>
+      <output message="tns:WalletResponse"/>
+    </operation>
+
+    <operation name="getWalletBalance">
+      <input message="tns:GetWalletBalanceRequest"/>
+      <output message="tns:WalletResponse"/>
     </operation>
   </portType>
 
   <!-- Definición de enlace (binding) -->
   <binding name="WalletServiceBinding" type="tns:WalletServicePortType">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
     <operation name="rechargeWallet">
-      <soap:operation soapAction="http://www.example.com/VirtualWallet#rechargeWallet"/>
+      <soap:operation soapAction="http://www.example.com/VirtualWallet#RechargeWallet"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+
+    <operation name="getWalletBalance">
+      <soap:operation soapAction="http://www.example.com/VirtualWallet#GetWalletBalance"/>
       <input>
         <soap:body use="literal"/>
       </input>

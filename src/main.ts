@@ -43,8 +43,14 @@ async function bootstrap() {
             return Responder.error(error.message, 500);
           }
         },
-        // getBalance: async () => {},
-        // updateBalance: async () => {},
+        getWalletBalance: async (args: any) => {
+          try {
+            const balance = await walletService.getBalance(args);
+            return Responder.success({ balance });
+          } catch (error) {
+            return Responder.error(error.message, 500);
+          }
+        },
         // getTransactons: async () => {},
         // generatePayment: async () => {},
         // confirmPayment: async () => {},

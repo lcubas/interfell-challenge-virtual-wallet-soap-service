@@ -8,6 +8,11 @@ export interface RechargeWalletDTO {
   phoneNumber: string;
 }
 
+export interface GetBalanceDTO {
+  documentNumber: string;
+  phoneNumber: string;
+}
+
 @Injectable()
 export class WalletService {
   constructor(
@@ -15,11 +20,7 @@ export class WalletService {
     private readonly transactionRepository: TransactionRepository,
   ) {}
 
-  async getBalance() {}
-
   async rechargeWallet(recharge: RechargeWalletDTO): Promise<void> {
-    console.log('WalletService::rechargeWallet', recharge);
-
     if (recharge.amount <= 0) {
       throw new Error('Amount must be greater than 0');
     }
@@ -41,7 +42,18 @@ export class WalletService {
     );
   }
 
-  async updateBalance() {}
+  async getBalance(data: GetBalanceDTO) {
+    const wallet = await this.walletRepository.findOne({
+      'customer.documentNumber': {
+        $eq: data.documentNumber,
+      },
+      'customer.phoneNumber': {
+        $eq: data.phoneNumber,
+      },
+    });
+
+    return wallet.balance;
+  }
 
   async getTransactons() {}
 
