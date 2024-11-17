@@ -1,44 +1,40 @@
-<definitions
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions 
   xmlns="http://schemas.xmlsoap.org/wsdl/"
   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-  xmlns:tns="http://example.com/soap"
-  targetNamespace="http://example.com/soap"
-  name="ExampleService"
->
-  <types>
-    <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/soap">
-      <element name="GetDataRequest">
-        <complexType>
-          <sequence>
-            <element name="id" type="string"/>
-          </sequence>
-        </complexType>
-      </element>
-      <element name="GetDataResponse">
-        <complexType>
-          <sequence>
-            <element name="data" type="string"/>
-          </sequence>
-        </complexType>
-      </element>
-    </schema>
-  </types>
-  <message name="GetDataRequest">
-    <part name="parameters" element="tns:GetDataRequest"/>
+  xmlns:tns="http://www.example.com/VirtualWallet"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://www.example.com/VirtualWallet"
+  name="VirtualWallet">
+
+  <!-- Definición de mensajes -->
+  <message name="RegisterCustomerRequest">
+    <part name="documentNumber" type="xsd:string"/>
+    <part name="name" type="xsd:string"/>
+    <part name="email" type="xsd:string"/>
+    <part name="phoneNumber" type="xsd:string"/>
   </message>
-  <message name="GetDataResponse">
-    <part name="parameters" element="tns:GetDataResponse"/>
+
+  <message name="RegisterCustomerResponse">
+    <part name="success" type="xsd:boolean"/>
+    <part name="cod_error" type="xsd:string"/>
+    <part name="message_error" type="xsd:string"/>
+    <part name="data" type="xsd:string"/>
   </message>
-  <portType name="ExamplePortType">
-    <operation name="GetData">
-      <input message="tns:GetDataRequest"/>
-      <output message="tns:GetDataResponse"/>
+
+  <!-- Definición de operaciones -->
+  <portType name="CustomerServicePortType">
+    <operation name="registerCustomer">
+      <input message="tns:RegisterCustomerRequest"/>
+      <output message="tns:RegisterCustomerResponse"/>
     </operation>
   </portType>
-  <binding name="ExampleBinding" type="tns:ExamplePortType">
+
+  <!-- Definición de enlace (binding) -->
+  <binding name="CustomerServiceBinding" type="tns:CustomerServicePortType">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <operation name="GetData">
-      <soap:operation soapAction="http://example.com/soap#GetData"/>
+    <operation name="registerCustomer">
+      <soap:operation soapAction="http://www.example.com/VirtualWallet#registerCustomer"/>
       <input>
         <soap:body use="literal"/>
       </input>
@@ -47,9 +43,11 @@
       </output>
     </operation>
   </binding>
-  <service name="ExampleService">
-    <port name="ExamplePort" binding="tns:ExampleBinding">
-      <soap:address location="http://localhost:3000/wsdl"/>
+
+  <!-- Definición del servicio -->
+  <service name="CustomerService">
+    <port name="CustomerServicePort" binding="tns:CustomerServiceBinding">
+      <soap:address location="http://localhost:3000/customers"/>
     </port>
   </service>
 </definitions>
