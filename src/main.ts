@@ -14,7 +14,7 @@ async function bootstrap() {
   const soapDefinitions = {
     CustomerService: {
       CustomerServicePort: {
-        registerCustomer: async function (args: any) {
+        registerCustomer: async (args: any) => {
           try {
             const newCustomer = await customerService.create(args);
             return Responder.success(newCustomer);
@@ -22,6 +22,15 @@ async function bootstrap() {
             return Responder.error(error.message, 500);
           }
         },
+      },
+    },
+    WalletService: {
+      WalletServicePort: {
+        getBalance: async () => {},
+        updateBalance: async () => {},
+        getTransactons: async () => {},
+        generatePayment: async () => {},
+        confirmPayment: async () => {},
       },
     },
   };

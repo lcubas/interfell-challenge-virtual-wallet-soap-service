@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CustomerRepository } from './customer-repository';
+import { CustomerRepository } from './customer.repository';
 
 export interface CreateCustomerDTO {
   name: string;

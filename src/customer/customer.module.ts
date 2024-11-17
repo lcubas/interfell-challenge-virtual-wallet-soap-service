@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule, SchemaFactory } from '@nestjs/mongoose';
 import { CustomerService } from './customer.service';
-import { CustomerRepository } from './customer-repository';
-import { CustomerSchema } from './customer-schema';
+import { CustomerRepository } from './customer.repository';
+import { CustomerSchema } from './customer.schema';
 
 @Module({
   imports: [

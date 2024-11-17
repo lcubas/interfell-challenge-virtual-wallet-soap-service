@@ -31,7 +31,7 @@ export abstract class MongooseAbstractRepository<
     });
 
     const newDocument = await createdDocument.save(options);
-    return newDocument.toObject() as TSchema;
+    return newDocument.toObject({ flattenObjectIds: true }) as TSchema;
   }
 
   async findOne(filterQuery: FilterQuery<TSchema>): Promise<TSchema> {
