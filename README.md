@@ -1,99 +1,210 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Virtual Wallet SOAP Service
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project is a **SOAP-based server** implemented with **NestJS**, designed to simulate a virtual wallet. The system provides essential features like customer registration, wallet top-up, making payments with confirmation payments, and balance inquiries.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Technologies Used
 
-## Description
+- **NestJS**: Framework for building scalable and maintainable server-side applications.
+- **MongoDB**: Database for efficient storage and retrieval of wallet data, transactions, and user details.
+- **pnpm**: Fast and efficient package manager for handling dependencies.
+- **SOAP**: Communication protocol for the API, offering structured and standardized messaging.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Local Installation
 
-## Project setup
+Follow these steps to set up and run the project locally:
 
-```bash
-$ pnpm install
+### Prerequisites
+
+Before you begin, ensure you have the following software installed:
+
+- **Node.js**: Version 18.x or later. [Download Node.js](https://nodejs.org/en/download/)
+- **pnpm**: Version 8.x or later. [Install pnpm](https://pnpm.io/installation)
+- **MongoDB**: Make sure MongoDB is set up and configured as a replica set. You can either use a local MongoDB instance or a cloud-based MongoDB service like [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
+
+### Step-by-Step Installation
+
+1. **Clone the repository**:
+Open your terminal and run the following command to clone the project:
+
+```bash 
+git clone https://github.com/lcubas/interfell-challenge-virtual-wallet-soap-service.git
+cd interfell-challenge-virtual-wallet-soap-service
 ```
 
-## Compile and run the project
+2. Copy `.env.example` file content into `.env` file.
 
-```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+```sh
+cp .env.example .env
 ```
 
-## Run tests
+3. **Install dependencies**:
+The project uses `pnpm` as the package manager. Install all the required dependencies by running:
 
-```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+```bash 
+pnpm install
 ```
 
-## Deployment
+4. **Configure MongoDB**:
+Ensure that your MongoDB instance is running. If you are use MongoDB locally, follow the steps in the [MongoDB Instalation Documentation](https://www.mongodb.com/docs/manual/installation/). Alternatively, you can use a cloud-based service like [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+5. **Run the application**:
+Start the development server with the following command:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ pnpm install -g mau
-$ mau deploy
+```bash 
+pnpm start:dev
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+The server will start running on [http://localhost:3000](http://localhost:3000). You can access the SOAP service via the generated WSDL file at the following endpoint:
+- http://localhost:3000/customers?wsdl
+- http://localhost:3000/wallets?wsdl
 
-## Resources
+Once the server is running, you can start interacting with the SOAP API using a SOAP client like **Postman** or any other tool that supports SOAP requests.
 
-Check out a few resources that may come in handy when working with NestJS:
+### Additional Setup
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+- **Build the Project** (Optional):
+If you want to build the project for production, run:
+```bash 
+pnpm build
+```
 
-## Support
+- **Run Tests** (Optional):
+You can run unit and integration tests using Jest:
+```bash 
+pnpm test
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Example Usage: Testing the SOAP Services
 
-## Stay in touch
+You can test the SOAP services by sending SOAP requests to the appropriate endpoints using a SOAP client like **Postman** or any other tool that supports SOAP requests.
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### 1. Register customer
+To register a new client, send a SOAP request with the following structure:
 
-## License
+**Request:**
+- URL: `http://localhost:3000/customers`
+- SOAPAction: `http://www.example.com/VirtualWallet#RegisterCustomer`
+- Body:
+  - `documentNumber`: "1234567890"
+  - `name`: "John Doe"
+  - `email`: "john.doe@example.com"
+  - `phoneNumber`: "123456789"
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+**Example Body:**
+```xml 
+<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="http://www.example.com/VirtualWallet">
+   <soapenv:Header/>
+   <soapenv:Body>
+        <RegisterCustomerRequest xmlns="http://www.example.com/VirtualWallet">
+            <documentNumber>12345678</documentNumber>
+            <name>Jhon Doe</name>
+            <email>jdoe@email.com</email>
+            <phoneNumber>123-456-789</phoneNumber>
+        </RegisterCustomerRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
+```
+
+### 2. Wallet Recharge
+To recharge a wallet, send a SOAP request with the following structure:
+
+**Request:**
+- URL: `http://localhost:3000/wallets`
+- SOAPAction: `http://www.example.com/VirtualWallet#RechargeWallet`
+- Body:
+  - `documentNumber`: "1234567890"
+  - `phoneNumber`: "123456789"
+  - `amount`: 100.00
+
+**Example Request:**
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="http://www.example.com/VirtualWallet">
+   <soapenv:Header/>
+   <soapenv:Body>
+        <RechargeWalletRequest xmlns="http://www.example.com/VirtualWallet">
+            <amount>100.5</amount>
+            <documentNumber>123456789</documentNumber>
+            <phoneNumber>555-1234</phoneNumber>
+        </RechargeWalletRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
+```
+
+### 3. Make a Payment
+To initiate a payment, send a SOAP request with the following structure:
+
+**Request:**
+
+- URL: `http://localhost:3000/wallets`
+- SOAPAction: `http://www.example.com/VirtualWallet#MakePaymentWithWallet`
+- Body:
+  - `documentNumber`: "1234567890"
+  - `phoneNumber`: "123456789"
+  - `purchaseAmount`: 50.00
+
+**Example Request:**
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="http://www.example.com/VirtualWallet">
+   <soapenv:Header/>
+   <soapenv:Body>
+        <MakePaymentWithWalletRequest xmlns="http://www.example.com/VirtualWallet">
+            <documentNumber>123456789</documentNumber>
+            <phoneNumber>555-1234</phoneNumber>
+            <purchaseAmount>450.5</purchaseAmount>
+        </MakePaymentWithWalletRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
+```
+
+### 4. Confirm Payment
+To confirm the payment, send a SOAP request with the following structure:
+
+**Request:**
+
+- URL: `http://localhost:3000/wallets`
+- SOAPAction: `http://www.example.com/VirtualWallet#ConfirmPaymentWithWallet`
+- Body:
+  - `sessionId`: "abcdfghijkl"
+  - `token`: "123456"
+
+**Example Request:**
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="http://www.example.com/VirtualWallet">
+   <soapenv:Header/>
+   <soapenv:Body>
+        <ConfirmPaymentWithWalletRequest xmlns="http://www.example.com/VirtualWallet">
+            <sessionId>f3752950-4f6a-45cd-bfe4-376d496bae93</sessionId>
+            <token>149571</token>
+        </ConfirmPaymentWithWalletRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
+```
+
+### 5. Check Wallet Balance
+To check the wallet balance, send a SOAP request with the following structure:
+
+**Request:**
+
+- URL: `http://localhost:3000/wallets`
+- SOAPAction: `http://www.example.com/VirtualWallet#GetWalletBalance`
+- Body:
+  - `documentNumber`: "1234567890"
+  - `phoneNumber`: "123456789"
+
+**Example Request:**
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="http://www.example.com/VirtualWallet">
+   <soapenv:Header/>
+   <soapenv:Body>
+        <GetWalletBalanceRequest xmlns="http://www.example.com/VirtualWallet">
+            <documentNumber>123456789</documentNumber>
+            <phoneNumber>555-1234</phoneNumber>
+        </GetWalletBalanceRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
+```
