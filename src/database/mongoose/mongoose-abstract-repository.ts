@@ -7,6 +7,7 @@ import {
   SaveOptions,
   Connection,
   ClientSession,
+  QueryOptions,
 } from 'mongoose';
 import { MongooseBaseSchema } from './mongoose-base-schema';
 import { IBaseRepository } from '../interfaces/IBaseRepository';
@@ -47,12 +48,18 @@ export abstract class MongooseAbstractRepository<
 
   async findOneAndUpdate(
     filterQuery: FilterQuery<TSchema>,
-    update: UpdateQuery<TSchema>,
+    updateQuery: UpdateQuery<TSchema>,
+    options?: QueryOptions,
   ) {
-    const document = await this.model.findOneAndUpdate(filterQuery, update, {
-      lean: true,
-      new: true,
-    });
+    const document = await this.model.findOneAndUpdate(
+      filterQuery,
+      updateQuery,
+      {
+        ...options,
+        lean: true,
+        new: true,
+      },
+    );
 
     if (!document) {
       this.logger.warn(`Document not found with filterQuery:`, filterQuery);

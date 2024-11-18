@@ -21,8 +21,8 @@ export interface CustomerData {
 })
 export class WalletSchema extends MongooseBaseSchema {
   @Prop({
-    required: true,
     type: Map,
+    required: true,
   })
   customer: CustomerData;
 

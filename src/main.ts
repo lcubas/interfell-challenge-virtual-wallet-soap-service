@@ -39,7 +39,6 @@ async function bootstrap() {
               message: 'Wallet recharged successfully',
             });
           } catch (error) {
-            console.log('walletSoapDefinition', error);
             return Responder.error(error.message, 500);
           }
         },
@@ -52,12 +51,25 @@ async function bootstrap() {
           }
         },
         makePaymentWithWallet: async (args: any) => {
-          console.log('makePaymentWithWallet', args);
+          try {
+            await walletService.makePayment(args);
+            return Responder.success({
+              message: 'check your email for payment confirmation',
+            });
+          } catch (error) {
+            return Responder.error(error.message, 500);
+          }
         },
         confirmPaymentWithWallet: async (args: any) => {
-          console.log('confirmPaymentWithWallet', args);
+          try {
+            await walletService.confirmPayment(args);
+            return Responder.success({
+              message: 'Payment confirmed successfully',
+            });
+          } catch (error) {
+            return Responder.error(error.message, 500);
+          }
         },
-        // getTransactons: async () => {},
       },
     },
   };
@@ -73,11 +85,7 @@ async function bootstrap() {
 
   server.listen(3000);
   soap.listen(server, '/customers', customerSoapDefinition, customerWSDL);
-  const ss = soap.listen(server, '/wallets', walletSoapDefinition, walletWSDL);
-
-  ss.log = function (type: any, data: any) {
-    console.log(type, data);
-  };
+  soap.listen(server, '/wallets', walletSoapDefinition, walletWSDL);
 }
 
 bootstrap();

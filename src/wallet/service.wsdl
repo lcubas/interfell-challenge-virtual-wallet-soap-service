@@ -26,8 +26,8 @@
   </message>
 
   <message name="ConfirmPaymentWithWalletRequest">
-    <part name="sessionId" type="xsd:string"/>
     <part name="token" type="xsd:string"/>
+    <part name="sessionId" type="xsd:string"/>
   </message>
 
   <message name="WalletResponse">

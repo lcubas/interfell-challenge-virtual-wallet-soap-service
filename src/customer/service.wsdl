@@ -34,7 +34,7 @@
   <binding name="CustomerServiceBinding" type="tns:CustomerServicePortType">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <operation name="registerCustomer">
-      <soap:operation soapAction="http://www.example.com/VirtualWallet#registerCustomer"/>
+      <soap:operation soapAction="http://www.example.com/VirtualWallet#RegisterCustomer"/>
       <input>
         <soap:body use="literal"/>
       </input>

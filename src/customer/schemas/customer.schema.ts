@@ -13,9 +13,15 @@ export class CustomerSchema extends MongooseBaseSchema {
   @Prop({ required: true, unique: true })
   email: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   documentNumber: string;
 
   @Prop()
   phoneNumber?: string;
+
+  @Prop()
+  creadtedAt: Date;
+
+  @Prop()
+  updatedAt: Date;
 }
